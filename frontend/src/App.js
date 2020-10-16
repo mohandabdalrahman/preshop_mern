@@ -2,14 +2,19 @@ import React from 'react';
 import { Container } from 'react-bootstrap'
 import Header from './components/Header'
 import Footer from './components/Footer'
-
+import Home from './screens/Home'
+import ProductScreen from './screens/ProductScreen'
+import { Route, Switch } from 'react-router-dom'
 const App = () => {
   return (
     <>
       <Header />
-      <main className="py-">
+      <main className="py-3">
         <Container>
-          <h1>Welcome to preshop</h1>
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/product/:id" component={ProductScreen} />
+          </Switch>
         </Container>
       </main>
       <Footer />
