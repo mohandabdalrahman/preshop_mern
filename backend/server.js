@@ -1,18 +1,24 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import products from './data/products.js'
+import cors from 'cors'
+import connectDatabase from './Database/db.js'
+import productsRouter from './Routes/productsRoute.js'
+import { errorhandler, notFound } from './Middlewares/errorMiddleware.js'
 dotenv.config()
+// CONNECT DATABASE
+connectDatabase()
 const app = express()
 
+// Middlewares
+app.use(cors())
+app.use(express.json())
 
-app.get('/api/products', (req, res) => {
-  res.json(products)
-})
+// Routes
+app.use('/api/products', productsRouter)
 
-app.get('/api/products/:id', (req, res) => {
-  const product = products.find(product => product._id === req.params.id)
-  res.json(product)
-})
+// Error middleware
+app.use(notFound)
+app.use(errorhandler)
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`))
