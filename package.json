@@ -1,0 +1,23 @@
+{
+  "name": "preshop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon backend/server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohandabdalrahman/preshop_mern.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mohandabdalrahman/preshop_mern/issues"
+  },
+  "homepage": "https://github.com/mohandabdalrahman/preshop_mern#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
