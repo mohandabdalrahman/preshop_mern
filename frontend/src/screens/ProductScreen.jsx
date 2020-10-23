@@ -15,7 +15,7 @@ import { fetchProductDetails } from '../Redux/Actions/productActions';
 import Loader from '../components/Loader';
 import Message from '../components/Message';
 const ProductScreen = ({ match, history }) => {
-  const [quantity, setQuantity] = useState(0);
+  const [quantity, setQuantity] = useState(1);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchProductDetails(match.params.id));
@@ -27,7 +27,7 @@ const ProductScreen = ({ match, history }) => {
 
   const addToCart = () => {
     history.push(
-      `/cart/${match.params.id}?qty=${quantity === 0 ? quantity + 1 : quantity}`
+      `/cart/${match.params.id}?qty=${quantity}`
     );
   };
 
