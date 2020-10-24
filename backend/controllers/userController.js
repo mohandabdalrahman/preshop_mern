@@ -4,8 +4,8 @@ import { generateToken } from '../utils/generateToken.js'
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body
   const user = await User.findOne({ email })
-  const { _id, name, isAdmin } = user
   if (user && (await user.matchPassword(password))) {
+    const { _id, name, isAdmin } = user
     res.json({
       _id,
       name,
@@ -37,6 +37,28 @@ const getUserProfile = asyncHandler(async (req, res) => {
 })
 
 
+const updateUserProfile = asyncHandler(async (req, res) => {
+  const user = await User.findById(req.user._id)
+  if (user) {
+    user.name = req.body.name || user.name
+    user.email = req.body.email || user.email
+    user.password = req.body.password || user.password
+
+    const updatedUser = await user.save()
+    const { _id, isAdmin, name, email } = updatedUser
+    res.status(200).json({
+      _id,
+      name,
+      email,
+      isAdmin,
+    })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+})
+
+
 const registerUser = asyncHandler(async (req, res) => {
   const { email, password, name } = req.body
   const userExist = await User.findOne({ email })
@@ -45,13 +67,13 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new Error('User already exist')
   }
   const user = await User.create({ email, password, name })
-  const { _id, isAdmin } = user
   if (user) {
+    const { _id, isAdmin } = user
     res.status(201).json({
       _id,
       name,
       email,
-      isAdmin, 
+      isAdmin,
       token: generateToken(_id)
     })
   } else {
@@ -65,5 +87,6 @@ const registerUser = asyncHandler(async (req, res) => {
 export {
   authUser,
   getUserProfile,
-  registerUser
+  registerUser,
+  updateUserProfile
 }

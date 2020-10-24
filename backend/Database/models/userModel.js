@@ -28,7 +28,7 @@ const userSchema = new Schema({
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password)
 }
-// encrypt password before save user
+// encrypt password before save user incase of update profile
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next()
