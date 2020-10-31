@@ -4,6 +4,7 @@ import cors from 'cors'
 import connectDatabase from './Database/db.js'
 import productsRouter from './Routes/productsRoute.js'
 import userRouter from './Routes/userRoute.js'
+import orderRouter from './Routes/orderRoute.js'
 import { errorhandler, notFound } from './Middlewares/errorMiddleware.js'
 dotenv.config()
 // CONNECT DATABASE
@@ -17,6 +18,7 @@ app.use(express.json())
 // Routes
 app.use('/api/products', productsRouter)
 app.use('/api/users', userRouter)
+app.use('/api/orders', orderRouter)
 
 // Error middleware
 app.use(notFound)
